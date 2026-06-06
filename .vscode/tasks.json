@@ -1,0 +1,111 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build All (Compile + BASIC + PETSCII + DA65 Check + D64 floppy disk)",
+            "type": "shell",
+            "command": "echo Build pipeline complete",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "1. Compile 6502 App with cl65",
+                "2. Run Post-Processing Script",
+                "3. Use petcat to convert the basic file to PETSCII",
+                "4. Check assembly with da65",
+                "5. Master D64 Disk Creation"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "1. Compile 6502 App with cl65",
+            "type": "shell",
+            "command": "cl65",
+            "args": [
+                "-t", "none",
+                "-C", "${workspaceFolder}/src/project.cfg",
+                "--start-addr", "0xC000",
+                "-O",
+                "-o", "${workspaceFolder}/build/main.bin",
+                "${workspaceFolder}/src/main.s",
+                "${workspaceFolder}/src/piers/rbcp.s"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "close": true
+            }
+        },
+        {
+            "label": "2. Run Post-Processing Script",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "scripts/post_process.py"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "close": true
+            }
+        },
+        {
+            "label": "3. Use petcat to convert the basic file to PETSCII",
+            "type": "shell",
+            "command": "bin/petcat.exe",
+            "args": [
+                "-w2",
+                "-o",
+                "build/switch.bas",
+                "build/main.bas"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "close": true
+            }
+        },
+        {
+            "label": "4. Check assembly with da65",
+            "type": "shell",
+            "command": "da65",   
+            "args": [
+                "--start-addr", "0xC000",
+                "${workspaceFolder}/build/main.bin",
+                "-o", "${workspaceFolder}/build/check.asm"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "close": true
+            }
+        },
+        {
+            "label": "5. Master D64 Disk Creation",
+            "type": "shell",
+            "command": "..\\..\\..\\C64 Code\\VICE3.8\\bin\\c1541.exe",
+            "args": [
+                "-format", "charromswitch,01", "d64",
+                ".\\build\\switch.d64",
+                "-write", ".\\build\\switch.bas", "\"switch.bas\""
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent",
+                "close": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,108 @@
+{
+    "$schema": "https://images.onerom.org/configs/schema.json",
+    "version": 1,
+    "name": "C64 Character Set",
+    "description": "A Variety of Custom Character Sets for the C64",
+    "categories": [
+        "computer",
+        "firmware",
+        "commodore",
+        "character",
+        "c64"
+    ],
+    "rom_sets": [
+        {
+            "type": "single",
+            "roms": [
+                {
+                    "description": "System - USB",
+                    "file": "https://images.onerom.org/plugins/system/usb/v0.1.2/plugin.bin",
+                    "type": "system_plugin",
+                    "size_handling": "pad"
+                }
+            ]
+        },
+        {
+            "type": "single",
+            "roms": [
+                {
+                    "description": "User - Host Control",
+                    "file": "https://images.onerom.org/plugins/user/host-control/v0.1.0/plugin.bin",
+                    "type": "user_plugin"
+                }
+            ]
+        },
+        {
+            "type": "single",
+            "roms": [
+                {
+                    "description": "Original C64 Character ROM",
+                    "file": "http://www.zimmers.net/anonftp/pub/cbm/firmware/computers/c64/characters.901225-01.bin",
+                    "type": "2332",
+                    "cs1": "active_low",
+                    "cs2": "active_high"
+                }
+            ]
+        },
+        {
+            "type": "single",
+            "roms": [
+               {
+                    "description": "Custom Apple II character ROM",
+                    "file": "https://raw.githubusercontent.com/patrickmollohan/c64-fonts/refs/heads/master/custom/apple_ii.bin",
+                    "type": "2332",
+                    "cs1": "active_low",
+                    "cs2": "active_high"
+                }
+            ]
+        },
+        {
+            "type": "single",
+            "roms": [
+                {
+                    "description": "Custom ZX Spectrum character ROM",
+                    "file": "https://raw.githubusercontent.com/patrickmollohan/c64-fonts/refs/heads/master/custom/zx_spectrum.bin",
+                    "type": "2332",
+                    "cs1": "active_low",
+                    "cs2": "active_high"
+                }
+            ]
+        },
+        {
+            "type": "single",
+            "roms": [
+                {
+                    "description": "Custom Minecraft character ROM",
+                    "file": "https://raw.githubusercontent.com/patrickmollohan/c64-fonts/refs/heads/master/custom/minecraft.bin",
+                    "type": "2332",
+                    "cs1": "active_low",
+                    "cs2": "active_high"
+                }
+            ]
+        },
+        {
+            "type": "single",
+            "roms": [
+                {
+                    "description": "Custom Aniron character ROM (Tolkien inspired)",
+                    "file": "https://raw.githubusercontent.com/patrickmollohan/c64-fonts/refs/heads/master/custom/aniron.bin",
+                    "type": "2332",
+                    "cs1": "active_low",
+                    "cs2": "active_high"
+                }
+            ]
+        },
+        {
+            "type": "single",
+            "roms": [
+                {
+                    "description": "Custom Aurebesh character ROM (Star Wars inspired)",
+                    "file": "https://raw.githubusercontent.com/patrickmollohan/c64-fonts/refs/heads/master/custom/aurebesh.bin",
+                    "type": "2332",
+                    "cs1": "active_low",
+                    "cs2": "active_high"
+                }
+            ]
+        }
+    ]
+}

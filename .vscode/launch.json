@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "cppvsdbg",
+            "request": "launch",
+            "name": "Run VICE main.bas",
+            "program": "D:\\Google Drive\\My Code\\C64 Code\\VICE3.8\\bin\\x64sc.exe",
+            "args": [
+                "-8",
+                "${workspaceFolder}\\build\\switch.d64",
+                "-keybuf",
+                "load\"switch.bas\",8"
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}
