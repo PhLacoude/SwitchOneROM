@@ -15,6 +15,7 @@
 
 .import rbcp_reset
 .import rbcp_cmd_enter_cmd_resp
+.import rbcp_cmd_get_ram_slot_info_all
 .import rbcp_cmd_load_slot
 .import rbcp_cmd_switch_and_exit
 
@@ -200,14 +201,25 @@ areWeIn:
     jmp exit
 
 loadToRAMslot1:
+    ; find free RAM slot to load the new ROM image to.
+    jsr rbcp_cmd_get_ram_slot_info_all
+	lda #7     ; Note: this does not clear the carry flag
+	sta _error ; Note: this does not clear the carry flag
+	bcs exit
+
+    ; If the active RAM slot is zero, use RAM slot 1,
+	; and vice versa
+	lda RBCP_DATA_ADDR + 1 ; Field 'active_slot'
+	eor #$01
+	sta _active_slot
+
     ; Load another ROM image from flash to an unused RAM slot
-    lda #1          ; RAM slot
     ldx _set_nb_c   ; Flash slot
     jsr rbcp_cmd_load_slot
     bcc loadedNowSwitch
 
-	; Set error flag to 7
-	lda #7
+	; Set error flag to 8
+	lda #8
 	sta _error
 
 	; Failed to load the RAM slot, exit with error
@@ -216,7 +228,7 @@ loadToRAMslot1:
 loadedNowSwitch:
     ; Switch to the new RAM slot and exit command-respond mode, which will
     ; cause the device to start executing from the new RAM slot.
-    lda #1          ; RAM slot to switch to
+    lda _active_slot ; RAM slot to switch to
     jsr rbcp_cmd_switch_and_exit
 
 	; We've reached this point, so the command was successfully sent to the 
@@ -237,7 +249,8 @@ exit:
 	;   4 = Failed to enter command-response mode
 	;   5 = Failed to rbcp_cmd_load_slot
 	;   6 = Failed to rbcp_cmd_enter_cmd_resp (carry is set, check ZP 5)
-	;   7 = Failed to rbcp_cmd_load_slot (carry is set)
+	;   7 = Failed to find active RAM slot (carry is set)
+	;   8 = Failed to rbcp_cmd_load_slot (carry is set)
 
     ; rbcp_cmd_enter_cmd_resp error codes returned to BASIC via _error+1 :
 	;   0 = Success
@@ -298,9 +311,10 @@ exit:
 ; rts+22 - one byte to save the old value of $01, which controls 
 ;          the char ROM visibility
 .segment "BSS"
-_error:    .res 18
-_old_bank: .res 1
-_old_d018: .res 1
-_set_nb_c: .res 1
-_old_01:   .res 1
-_old_kb:   .res 1
+_error:       .res 18
+_old_bank:    .res 1
+_old_d018:    .res 1
+_set_nb_c:    .res 1
+_old_01:      .res 1
+_old_kb:      .res 1
+_active_slot: .res 1

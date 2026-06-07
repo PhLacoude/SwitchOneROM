@@ -1,5 +1,5 @@
 ; da65 V2.19 - Git cc3c40c
-; Created:    2026-06-06 21:31:56
+; Created:    2026-06-07 18:33:35
 ; Input file: D:\Google Drive\My Code\6502\CC65\SwitchCharROM/build/main.bin
 ; Page:       1
 
@@ -8,21 +8,21 @@
 
         sei
         lda     #$01
-        sta     $C31E
+        sta     $C32F
         lda     #$00
-        sta     $C31F
+        sta     $C330
         lda     $DC0E
-        sta     $C334
+        sta     $C345
         and     #$FE
         sta     $DC0E
         lda     #$02
-        sta     $C31E
+        sta     $C32F
         lda     $01
-        sta     $C333
+        sta     $C344
         and     #$FB
         sta     $01
         lda     #$03
-        sta     $C31E
+        sta     $C32F
         ldx     #$10
         ldy     #$00
 LC02D:  .byte   $B9
@@ -35,7 +35,7 @@ LC032:  bmi     *-54
         inc     LC032
         dex
         bne     LC02D
-        lda     $C333
+        lda     $C344
         sta     $01
         ldx     #$04
         ldy     #$00
@@ -52,12 +52,12 @@ LC04D:  .byte   $5C
         dex
         bne     LC048
         lda     $DD00
-        sta     $C330
+        sta     $C341
         and     #$FC
         ora     #$02
         sta     $DD00
         lda     $D018
-        sta     $C331
+        sta     $C342
         and     #$F1
         ora     #$0C
         sta     $D018
@@ -66,52 +66,54 @@ LC04D:  .byte   $5C
         sta     $01
         ldx     #$00
 LC07C:  lda     $D000,x
-        sta     $C320,x
+        sta     $C331,x
         inx
         cpx     #$10
         bne     LC07C
-        jsr     LC1B0
+        jsr     LC1C1
         lda     #$04
-        sta     $C31E
-        jsr     LC1E4
+        sta     $C32F
+        jsr     LC1F5
         lda     #$05
-        sta     $C31E
+        sta     $C32F
         bcc     LC0A6
         lda     #$06
-        sta     $C31E
-        .byte   $A5
-LC09F:  sbc     $8D,x
-        .byte   $1F
-        .byte   $C3
-        jmp     LC0C2
+        sta     $C32F
+        lda     $F5
+        sta     $C330
+        jmp     LC0D3
 
-LC0A6:  .byte   $A9
-LC0A7:  ora     ($AE,x)
-        .byte   $32
-        .byte   $C3
-        jsr     LC262
-        bcc     LC0B8
+LC0A6:  jsr     LC259
         lda     #$07
-        sta     $C31E
-        jmp     LC0C2
-
-LC0B8:  lda     #$01
+        sta     $C32F
+        bcs     LC0D3
+LC0B0:  lda     $D109
+        eor     #$01
+        sta     $C346
+        ldx     $C343
         jsr     LC273
+        bcc     LC0C8
+        lda     #$08
+        sta     $C32F
+        jmp     LC0D3
+
+LC0C8:  lda     $C346
+        jsr     LC284
         lda     #$00
-        sta     $C31E
-LC0C2:  lda     $01
+LC0D0:  sta     $C32F
+LC0D3:  lda     $01
         ora     #$04
         sta     $01
-        lda     $C331
+        lda     $C342
         sta     $D018
-        lda     $C330
+        lda     $C341
         sta     $DD00
-        lda     $C334
+        lda     $C345
         sta     $DC0E
-LC0DA:  cli
+LC0EB:  cli
         rts
 
-LC0DC:  lda     $D021
+LC0ED:  lda     $D021
         lda     $D052
         lda     $D042
         lda     $D043
@@ -119,157 +121,155 @@ LC0DC:  lda     $D021
         lda     $D021
         rts
 
-LC0EF:  sta     $F4
+LC100:  sta     $F4
         lda     $F0
-        sta     LC0F7
+        sta     LC108
         .byte   $AD
-LC0F7:  brk
-        bne     LC09F
+LC108:  brk
+        bne     LC0B0
         sbc     ($8D),y
-        .byte   $FF
-        cpy     #$AD
-        brk
-        bne     LC0A7
-        .byte   $F4
-        beq     LC115
+        bpl     LC0D0
+        lda     $D000
+        lda     $F4
+        beq     LC126
         tax
         ldy     #$00
-LC108:  lda     $F7,y
-        sta     LC10F
+LC119:  lda     $F7,y
+        sta     LC120
         .byte   $AD
-LC10F:  brk
-        bne     LC0DA
+LC120:  brk
+        bne     LC0EB
         dex
-        bne     LC108
-LC115:  rts
+        bne     LC119
+LC126:  rts
 
-LC116:  lda     $D102
+LC127:  lda     $D102
         sta     $F2
         rts
 
-LC11C:  ldx     #$FF
-LC11E:  lda     $D102
+LC12D:  ldx     #$FF
+LC12F:  lda     $D102
         cmp     $F2
-        bne     LC12A
+        bne     LC13B
         dex
-        bne     LC11E
+        bne     LC12F
         sec
         rts
 
-LC12A:  clc
+LC13B:  clc
         rts
 
-LC12C:  ldx     #$FF
-LC12E:  lda     $D104
+LC13D:  ldx     #$FF
+LC13F:  lda     $D104
         cmp     #$BB
-        beq     LC13D
-        jsr     LC2ED
+        beq     LC14E
+        jsr     LC2FE
         dex
-        bne     LC12E
+        bne     LC13F
         sec
         rts
 
-LC13D:  clc
+LC14E:  clc
         rts
 
-LC13F:  ldx     #$FF
+LC150:  ldx     #$FF
         ldy     #$FF
-LC143:  lda     $D104
+LC154:  lda     $D104
         cmp     #$BB
-        beq     LC152
+        beq     LC163
         dex
-        bne     LC143
+        bne     LC154
         dey
-        bne     LC143
+        bne     LC154
         sec
         rts
 
-LC152:  clc
+LC163:  clc
         rts
 
-LC154:  lda     $D105
+LC165:  lda     $D105
         cmp     #$CC
-        beq     LC15D
+        beq     LC16E
         sec
         rts
 
-LC15D:  clc
+LC16E:  clc
         rts
 
-LC15F:  tax
+LC170:  tax
         lda     #$01
         sta     $F3
         txa
-        jmp     LC16E
+        jmp     LC17F
 
-LC168:  tax
+LC179:  tax
         lda     #$00
         sta     $F3
         txa
-LC16E:  sta     $F4
+LC17F:  sta     $F4
         lda     #$FF
         sta     $F5
         lda     #$03
         sta     $F6
-LC178:  jsr     LC116
+LC189:  jsr     LC127
         lda     $F4
-        jsr     LC0EF
-        jsr     LC11C
-        bcc     LC18E
+        jsr     LC100
+        jsr     LC12D
+        bcc     LC19F
         dec     $F6
-        bpl     LC178
+        bpl     LC189
         lda     #$01
-        jmp     LC1AA
+        jmp     LC1BB
 
-LC18E:  lda     $F3
-        beq     LC199
-        jsr     LC13F
-        bcs     LC19E
-        bcc     LC1A3
-LC199:  jsr     LC12C
-        bcc     LC1A3
-LC19E:  lda     #$02
-        jmp     LC1AA
+LC19F:  lda     $F3
+        beq     LC1AA
+        jsr     LC150
+        bcs     LC1AF
+        bcc     LC1B4
+LC1AA:  jsr     LC13D
+        bcc     LC1B4
+LC1AF:  lda     #$02
+        jmp     LC1BB
 
-LC1A3:  jsr     LC154
-        bcc     LC1AE
+LC1B4:  jsr     LC165
+        bcc     LC1BF
         lda     #$03
-LC1AA:  sta     $F5
+LC1BB:  sta     $F5
         sec
         rts
 
-LC1AE:  clc
+LC1BF:  clc
         rts
 
-LC1B0:  jsr     LC1D0
-        jsr     LC2ED
-        jsr     LC1D9
-        jsr     LC2ED
-        jsr     LC1DD
-        jsr     LC2ED
+LC1C1:  jsr     LC1E1
+        jsr     LC2FE
+        jsr     LC1EA
+        jsr     LC2FE
+        jsr     LC1EE
+        jsr     LC2FE
         rts
 
-LC1C3:  lda     #$AA
+LC1D4:  lda     #$AA
         sta     $F0
         lda     #$AA
         sta     $F1
         lda     #$00
-        jmp     LC0EF
+        jmp     LC100
 
-LC1D0:  ldy     #$05
-LC1D2:  jsr     LC1C3
+LC1E1:  ldy     #$05
+LC1E3:  jsr     LC1D4
         dey
-        bne     LC1D2
+        bne     LC1E3
         rts
 
-LC1D9:  jsr     LC1C3
+LC1EA:  jsr     LC1D4
         rts
 
-LC1DD:  jsr     LC0DC
-        jsr     LC1C3
+LC1EE:  jsr     LC0ED
+        jsr     LC1D4
         rts
 
-LC1E4:  lda     #$FF
+LC1F5:  lda     #$FF
         sta     $F5
         lda     #$00
         sta     $F0
@@ -295,63 +295,63 @@ LC1E4:  lda     #$FF
         sta     $FF
         lda     #$03
         sta     $F6
-LC218:  jsr     LC116
-        jsr     LC0DC
+LC229:  jsr     LC127
+        jsr     LC0ED
         lda     #$09
-        jsr     LC0EF
-        jsr     LC11C
-        bcc     LC231
+        jsr     LC100
+        jsr     LC12D
+        bcc     LC242
         dec     $F6
-        bpl     LC218
+        bpl     LC229
         lda     #$01
-        jmp     LC242
+        jmp     LC253
 
-LC231:  jsr     LC12C
-        bcc     LC23B
+LC242:  jsr     LC13D
+        bcc     LC24C
         lda     #$02
-        jmp     LC242
+        jmp     LC253
 
-LC23B:  jsr     LC154
-        bcc     LC246
+LC24C:  jsr     LC165
+        bcc     LC257
         lda     #$03
-LC242:  sta     $F5
+LC253:  sta     $F5
         sec
         rts
 
-LC246:  clc
+LC257:  clc
         rts
 
-        lda     #$01
+LC259:  lda     #$01
         sta     $F0
         lda     #$03
         sta     $F1
         lda     #$00
-        jmp     LC168
+        jmp     LC179
 
         lda     #$01
         sta     $F0
         lda     #$02
         sta     $F1
         lda     #$00
-        jmp     LC168
+        jmp     LC179
 
-LC262:  sta     $F7
+LC273:  sta     $F7
         stx     $F8
         lda     #$02
         sta     $F0
         lda     #$02
         sta     $F1
         lda     #$02
-        jmp     LC168
+        jmp     LC179
 
-LC273:  sta     $F7
+LC284:  sta     $F7
         lda     #$00
         sta     $F0
         lda     #$04
         sta     $F1
         lda     #$01
-        jsr     LC0EF
-        jsr     LC2ED
+        jsr     LC100
+        jsr     LC2FE
         rts
 
         lda     #$01
@@ -359,21 +359,21 @@ LC273:  sta     $F7
         lda     #$04
         sta     $F1
         lda     #$00
-        jmp     LC168
+        jmp     LC179
 
         lda     #$01
         sta     $F0
         lda     #$05
         sta     $F1
         lda     #$00
-        jmp     LC168
+        jmp     LC179
 
-LC2A0:  lda     #$01
+LC2B1:  lda     #$01
         sta     $F0
         lda     #$06
         sta     $F1
         lda     #$00
-        jmp     LC168
+        jmp     LC179
 
         lda     #$00
         sta     $F7
@@ -381,39 +381,39 @@ LC2A0:  lda     #$01
         sta     $F8
         lda     #$00
         sta     $F9
-        jsr     LC2A0
-        bcs     LC2EB
+        jsr     LC2B1
+        bcs     LC2FC
         lda     $D108
         cmp     $F7
-        bne     LC2EB
+        bne     LC2FC
         lda     $F7
-        bne     LC2D9
+        bne     LC2EA
         lda     $D109
         cmp     $F8
-        bne     LC2EB
+        bne     LC2FC
         lda     $D10A
         cmp     $F9
-        bcc     LC2EB
+        bcc     LC2FC
         clc
         rts
 
-LC2D9:  lda     $D109
+LC2EA:  lda     $D109
         cmp     $F8
-        bcc     LC2EB
-        bne     LC2E9
+        bcc     LC2FC
+        bne     LC2FA
         lda     $D10A
         cmp     $F9
-        bcc     LC2EB
-LC2E9:  clc
+        bcc     LC2FC
+LC2FA:  clc
         rts
 
-LC2EB:  sec
+LC2FC:  sec
         rts
 
-LC2ED:  stx     $F3
+LC2FE:  stx     $F3
         ldx     #$0A
-LC2F1:  dex
-        bne     LC2F1
+LC302:  dex
+        bne     LC302
         ldx     $F3
         rts
 
@@ -422,19 +422,19 @@ LC2F1:  dex
         lda     #$00
         sta     $F1
         lda     #$00
-        jmp     LC168
+        jmp     LC179
 
         lda     #$03
         sta     $F0
         lda     #$01
         sta     $F1
         lda     #$03
-        jmp     LC168
+        jmp     LC179
 
         lda     #$03
         sta     $F0
         lda     #$06
         sta     $F1
         lda     #$04
-        jmp     LC15F
+        jmp     LC170
 
