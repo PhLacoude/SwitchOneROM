@@ -203,12 +203,12 @@ compilation.
 
 ## Lawsuits
 I am not responsible for the good or bad usage of this code. If you fall in love with One ROM (like me),
-for its absolute genius design and flawless execution, it is not my fault if you neglect your friend and 
+for its absolute genius design and flawless execution, it is not my fault if you neglect your friends and 
 family in the pursuit of ever cooler applications... And find yourself typing these lines at 9:07 PM 
 on a Saturday night!
 
 If you fry your beloved Commodore 64 by pluging One ROM upside down, you will have to fix it
 yourself by watching Robin at 8-Bit Show And Tell, or Adrian Blake, or The 8-Bit Guy, or Mark
 at TheRetroChannel. It will cause you to spend hundreds of dollars and hours to do what you 
-could have done on your Intel / AMD laptop with VICE for $0. This is the (small) price of 
-being a Level V geek...
+could have done on your Intel / AMD laptop with VICE for $0. This is the (small) price to pay
+for being a Level V geek...

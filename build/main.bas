@@ -40,7 +40,7 @@
 2180 rem -----
 2190 rem we need to pass c to the ml
 2200 rem code to pick the right rom
-2210 poke i+20, c : rem _set_nb_c (ml)
+2210 poke i+20, c-1 : rem set ml
 2300 rem jump to machine language code
 2310 sys 49152
 2320 sys 58692
@@ -72,13 +72,14 @@
 3070 print "11,263 bytes. do you want";
 3080 print " to soft "
 3090 print "reset? even if you reset ";
-3100 print "the system, one rom will ";
-3110 print "still use the new font. ";
-3120 print "(y/n)";
-3130 input a$
-3140 if a$ = "y" then sys 64738
-3150 end
-3160 rem -----
+3100 print "the system, ";
+3110 print "one rom will ";
+3120 print "still use the new font. ";
+3130 print "(y/n)";
+3140 input a$
+3150 if a$ = "y" then sys 64738
+3160 end
+3170 rem -----
 10000 data 120,169,1,141,30,195
 10010 data 169,0,141,31,195,173
 10020 data 14,220,141,52,195,41

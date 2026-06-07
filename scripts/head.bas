@@ -40,7 +40,7 @@
 2180 rem -----
 2190 rem we need to pass c to the ml
 2200 rem code to pick the right rom
-2210 poke i+20, c : rem _set_nb_c (ml)
+2210 poke i+20, c-1 : rem set ml
 2300 rem jump to machine language code
 2310 sys 49152
 2320 sys 58692
